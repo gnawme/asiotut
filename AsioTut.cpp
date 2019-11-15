@@ -1,46 +1,15 @@
 /// \file   AsioTut.cpp
 /// \brief  Omnibus for ASIO tutorials
-#include <asio.hpp>
-#include <chrono>
-#include <functional>
-#include <iostream>
+#include "AsioTut.h"
 
-using namespace std::chrono_literals;
-using namespace std::placeholders;
-using SteadyTimer = asio::basic_waitable_timer<std::chrono::steady_clock>;
+#include <thread>
 
-///
-class Print {
-public:
-    Print(asio::io_context& context) : _asioContext(context), _timer(context, 5s) {
-        _timer.async_wait(std::bind(&Print::print, this));
-    }
-
-    ~Print() {
-        std::cout << "The final count is " << _count << std::endl;
-    }
-
-    void print() {
-        if (_count < 5) {
-            std::cout << _count << std::endl;
-            ++(_count);
-            _timer.expires_at(_timer.expiry() + 1s);
-            _timer.async_wait(std::bind(&Print::print, this));
-        }
-    }
-
-private:
-    asio::io_context& _asioContext;
-    SteadyTimer _timer;
-    int _count{0};
-};
-
-///
+/// Worker for async thread
 void handler(const asio::error_code& error) {
     std::cout << "Hello, world!" << std::endl;
 }
 
-///
+/// Worker for for std::bind example
 void print(const asio::error_code& error, SteadyTimer& timer, int* count) {
     if (*count < 5) {
         std::cout << *count << std::endl;
@@ -85,6 +54,18 @@ int timerBoundClass() {
     return 0;
 }
 
+/// Timer.5
+int timerMultithreaded() {
+    std::cout << "Multithreaded timer" << std::endl;
+    asio::io_context asioContext;
+    PrintStrand print(asioContext);
+    std::thread asioThread([&asioContext] { asioContext.run(); });
+    asioContext.run();
+    asioThread.join();
+
+    return 0;
+}
+
 /// Timer.1
 int timerSynchronous() {
     std::cout << "Synchronous timer" << std::endl;
@@ -103,4 +84,5 @@ int main() {
     timerAsynchronous();
     timerBound();
     timerBoundClass();
+    timerMultithreaded();
 }
