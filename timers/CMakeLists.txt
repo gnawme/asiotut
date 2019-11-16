@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.5)
-project(asiotut)
+project(asiotimers)
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
@@ -9,9 +9,10 @@ include_directories(${GTEST_INCLUDE_DIRS})
 
 set(
     SOURCE_FILES
-    AsioTut.cpp
+    AsioTimers.cpp
+    AsioTimers.h
 )
 
-add_executable(asiotut ${SOURCE_FILES})
+add_executable(asiotimers ${SOURCE_FILES})
 
-target_link_libraries(asiotut -lgtest pthread)
+target_link_libraries(asiotimers -lgtest pthread)
