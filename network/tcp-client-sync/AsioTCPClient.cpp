@@ -9,11 +9,11 @@ using asio::ip::tcp;
 constexpr char DAYTIMER[]{"time.nist.gov"};
 
 /// Daytime.1
-int tcpDaytimeClientSynchronous() {
+int tcpDaytimeClientSynchronous(const char* serverAddr) {
     try {
         asio::io_context asioContext;
         tcp::resolver resolver(asioContext);
-        tcp::resolver::results_type endpoints = resolver.resolve(DAYTIMER, "daytime");
+        tcp::resolver::results_type endpoints = resolver.resolve(serverAddr, "daytime");
 
         tcp::socket socket(asioContext);
         asio::connect(socket, endpoints);
@@ -31,7 +31,7 @@ int tcpDaytimeClientSynchronous() {
                 throw asio::system_error(error);
             }
 
-            std::cout << "Resolved " << DAYTIMER << ", result: " << std::endl;
+            std::cout << "Resolved " << serverAddr << ", result: " << std::endl;
             std::cout.write(buf.data(), len);
         }
     } catch (std::exception& e) {
@@ -42,6 +42,11 @@ int tcpDaytimeClientSynchronous() {
 }
 
 ///
-int main() {
-    tcpDaytimeClientSynchronous();
+int main(int argc, char** argv) {
+
+    if (argc > 1) {
+        tcpDaytimeClientSynchronous(*++argv);
+    } else {
+        tcpDaytimeClientSynchronous(DAYTIMER);
+    }
 }
