@@ -31,6 +31,7 @@ int tcpDaytimeClientSynchronous() {
                 throw asio::system_error(error);
             }
 
+            std::cout << "Resolved " << DAYTIMER << ", result: " << std::endl;
             std::cout.write(buf.data(), len);
         }
     } catch (std::exception& e) {
