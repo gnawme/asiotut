@@ -1,9 +1,9 @@
 /// \file   AsioTCPServer.cpp
 /// \brief  Daytime.2 tutorial
+#include "AsioCommon.h"
+
 #include <asio.hpp>
-#include <ctime>
 #include <iostream>
-#include <string>
 
 using asio::ip::tcp;
 
@@ -11,12 +11,6 @@ namespace {
 constexpr char LOCALHOST[]{"127.0.0.1"};
 constexpr unsigned short DAYTIME_PORT{13};
 }  // namespace
-
-/// Emulates the response of a daytime server
-std::string makeDaytimeResponse() {
-    std::time_t now = std::time(0);
-    return std::ctime(&now);
-}
 
 /// Daytime.2 accepts connections on localhost
 /// @note: Must run as root (port 13 is privileged)

@@ -6,9 +6,12 @@ src = [
     'AsioUDPServer.cpp',
 ]
 
+ainclude = include_directories('../')
+
 threads = dependency('threads')
 
 executable('asio-udpserver',
     src,
+    include_directories: [ainclude],
     dependencies: [threads],
 )

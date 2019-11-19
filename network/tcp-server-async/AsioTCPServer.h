@@ -2,8 +2,9 @@
 /// \brief  Daytime.3 implementation
 #pragma once
 
+#include "AsioCommon.h"
+
 #include <asio.hpp>
-#include <ctime>
 #include <functional>
 #include <memory>
 
@@ -13,12 +14,6 @@ using namespace std::placeholders;
 namespace {
 constexpr char LOCALHOST[]{"127.0.0.1"};
 constexpr unsigned short DAYTIME_PORT{13};
-
-/// Emulates the response of a daytime server
-std::string makeDaytimeResponse() {
-    std::time_t now = std::time(0);
-    return std::ctime(&now);
-}
 }  // namespace
 
 ///

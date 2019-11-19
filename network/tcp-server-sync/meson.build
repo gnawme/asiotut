@@ -6,9 +6,12 @@ src = [
     'AsioTCPServer.cpp',
 ]
 
+ainclude = include_directories('../')
+
 threads = dependency('threads')
 
 executable('asio-tcpserver',
     src,
+    include_directories: [ainclude],
     dependencies: [threads],
 )

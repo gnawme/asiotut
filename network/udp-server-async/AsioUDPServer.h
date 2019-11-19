@@ -1,23 +1,16 @@
 /// \file   AsioUDPServer.h
 /// \brief  Daytime.6 classes
 #pragma once
+#include "AsioCommon.h"
 
 #include <array>
 #include <asio.hpp>
-#include <ctime>
 #include <functional>
 #include <iostream>
 #include <memory>
-#include <string>
 
 using asio::ip::udp;
 using namespace std::placeholders;
-
-///
-std::string makeDaytimeResponse() {
-    std::time_t now = std::time(0);
-    return std::ctime(&now);
-}
 
 ///
 class AsioUDPServer {

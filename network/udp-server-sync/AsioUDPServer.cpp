@@ -1,18 +1,12 @@
 /// \file   AsioUDPServer.cpp
 /// \brief  Daytime.5 tutorial
+#include "AsioCommon.h"
+
 #include <array>
 #include <asio.hpp>
-#include <ctime>
 #include <iostream>
-#include <string>
 
 using asio::ip::udp;
-
-///
-std::string makeDaytimeResponse() {
-    std::time_t now = std::time(0);
-    return std::ctime(&now);
-}
 
 /// Daytime.5
 int udpDaytimeServerSynchronous() {
