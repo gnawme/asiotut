@@ -27,6 +27,8 @@ int timerAsynchronous() {
     dtimer.async_wait(&handler);
 
     asioContext.run();
+
+    return 0;
 }
 
 /// Timer.3
